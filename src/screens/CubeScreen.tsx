@@ -1,10 +1,11 @@
 import React from "react";
-import { Dimensions } from "react-native";
+import {Dimensions, View} from "react-native";
 
 import {
     Vector,
     matrixVecMul4,
     processTransform3d,
+    string,
 } from "react-native-redash";
 import Svg, { Circle, Polygon } from "react-native-svg";
 import Animated, { divide } from "react-native-reanimated";
@@ -13,27 +14,26 @@ import {SIZE} from "../constants";
 const { width, height } = Dimensions.get("window");
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedPolygon = Animated.createAnimatedComponent(Polygon);
-const string: (strings: string, ...values: readonly (string | number | Animated.Node<number> | readonly (number | Animated.Node<number> | readonly (number | Animated.Node<number>)[])[] | Animated.Node<string> | readonly (string | Animated.Node<string> | readonly (string | Animated.Node<string>)[])[])[])
-    => Animated.Node<string>;
+
 
 const backface = [
-    { x: -0.5, y: -0.5, z: -0.5 },
-    { x: 0.5, y: -0.5, z: -0.5 },
-    { x: -0.5, y: 0.5, z: -0.5 },
-    { x: 0.5, y: 0.5, z: -0.5 },
+    { x: -1, y: -1, z: -1 },
+    { x: 1, y: -1, z: -1 },
+    { x: -1, y: 1, z: -1 },
+    { x: 1, y: 1, z: -1 },
 ] as const;
 
 const frontface = [
-    { x: -0.5, y: -0.5, z: 0.5 },
-    { x: 0.5, y: -0.5, z: 0.5 },
-    { x: -0.5, y: 0.5, z: 0.5 },
-    { x: 0.5, y: 0.5, z: 0.5 },
+    { x: 1, y: -1, z: 1 },
+    { x: 1, y: -1, z: 1 },
+    { x: -1, y: 1, z: 1 },
+    { x: 1, y: 1, z: 1 },
 ] as const;
 
 const points3D = [...frontface, ...backface];
 
 const serialize = (p1: Vector, p2: Vector, p3: Vector, p4: Vector) =>
-    string(`${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}`);
+    string`${p1.x},${p1.y} ${p2.x},${p2.y} ${p3.x},${p3.y} ${p4.x},${p4.y}`;
 
 const Transformations3D = () => {
     const [rotateX, rotateY] = [0, 0];
@@ -49,10 +49,10 @@ const Transformations3D = () => {
     });
     const [p1, p2, p3, p4, p5, p6, p7, p8] = points;
     return (
-        <>
+        <View>
             <Svg width={width} height={height}>
                 {points.map(({ x, y }, index) => (
-                    <AnimatedCircle key={index} r={5} fill="blue" cx={x} cy={y} />
+                    <AnimatedCircle key={index} r={5} fill="red" cx={x} cy={y} />
                 ))}
                 <AnimatedPolygon
                     opacity={0.5}
@@ -75,7 +75,7 @@ const Transformations3D = () => {
                     points={serialize(p3, p4, p8, p7)}
                 />
             </Svg>
-        </>
+        </View>
     );
 };
 

@@ -16,7 +16,7 @@
     "react-native": "~0.63.4",
     "react-native-gesture-handler": "~1.8.0",
     "react-native-reanimated": "^1.13.2",
-    "react-native-redash": "^16.0.8",
+    "react-native-redash": "^14.2.4",
     "react-native-screens": "~2.15.0",
     "react-native-svg": "^12.1.0",
     "react-native-unimodules": "~0.12.0",
